@@ -8,6 +8,7 @@ bin
 
 # idea
 out
+classes
 *.ipr
 *.iws
 *.iml
@@ -20,3 +21,4 @@ build
 # other
 eclipse
 run
+
