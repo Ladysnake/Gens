@@ -8,7 +8,7 @@ public class EventHandler {
     @SubscribeEvent
     public void onInitMapGen(InitMapGenEvent event) {
         if (event.getType() == InitMapGenEvent.EventType.VILLAGE) {
-            event.setNewGen(new MapGenGensVillage((MapGenVillage) event.getOriginalGen()));
+            event.setNewGen(new MapGenGensVillage((MapGenVillage) event.getNewGen()));
         }
     }
 }
