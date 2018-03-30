@@ -3,6 +3,7 @@ package ladysnake.gens.init;
 import ladylib.registration.ItemRegistrar;
 import ladysnake.gens.Gens;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,5 +20,6 @@ public class ModItems {
     public static void onRegistryRegister(RegistryEvent.Register<Item> event) {
         ItemRegistrar reg = Gens.lib.getItemRegistrar();
         reg.addItem(name(new ItemSword(Item.ToolMaterial.IRON), "scimitar"), true);
+        reg.addItem(name(new ItemBow(), "tuareg_bow"), true);
     }
 }

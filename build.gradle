@@ -65,7 +65,7 @@ minecraft {
 }
 
 dependencies {
-    deobfCompile 'com.github.Pyrofab:Ladylib:6ec78d7c90'
+    deobfCompile 'com.github.Pyrofab:Ladylib:819fa399d5'
 }
 
 processResources {
