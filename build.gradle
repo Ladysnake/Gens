@@ -89,4 +89,7 @@ processResources {
 
 jar {
     archiveName = "${archivesBaseName}-${mcVersion}-${modVersion}.jar"
+    manifest {
+        attributes 'FMLAT': 'gens_at.cfg'
+    }
 }
