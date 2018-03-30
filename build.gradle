@@ -22,6 +22,16 @@ compileJava {
 
 repositories {
     maven { url 'https://jitpack.io' }
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "modmaven.k-4u.nl"
+    }
 }
 
 minecraft {
@@ -55,7 +65,7 @@ minecraft {
 }
 
 dependencies {
-//    deobfCompile 'com.github.Ladysnake:LadylibProject:090bb82ead'
+    deobfCompile 'com.github.Pyrofab:Ladylib:6ec78d7c90'
 }
 
 processResources {
