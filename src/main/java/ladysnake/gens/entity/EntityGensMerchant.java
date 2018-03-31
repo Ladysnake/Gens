@@ -2,6 +2,11 @@ package ladysnake.gens.entity;
 
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.monster.EntityEvoker;
+import net.minecraft.entity.monster.EntityVex;
+import net.minecraft.entity.monster.EntityVindicator;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -23,6 +28,15 @@ public class EntityGensMerchant extends EntityGensVillager implements IMerchant 
 
     public EntityGensMerchant(World worldIn) {
         super(worldIn);
+    }
+
+    @Override
+    protected void initEntityAI() {
+        super.initEntityAI();
+        this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityZombie.class, 8.0F, 0.6D, 0.6D));
+        this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityEvoker.class, 12.0F, 0.8D, 0.8D));
+        this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityVindicator.class, 8.0F, 0.8D, 0.8D));
+        this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityVex.class, 8.0F, 0.6D, 0.6D));
     }
 
     @Override

@@ -2,6 +2,7 @@ package ladysnake.gens.init;
 
 import ladysnake.gens.Gens;
 import ladysnake.gens.entity.EntityGensMerchant;
+import ladysnake.gens.entity.EntityGensSoldier;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;
@@ -21,7 +22,10 @@ public class ModEntities {
     private static int id;
     @SubscribeEvent
     public static void onRegistryRegister(RegistryEvent.Register<EntityEntry> event) {
-        event.getRegistry().registerAll(createEntry(EntityGensMerchant.class, EntityGensMerchant::new, "desert_person").build());
+        event.getRegistry().registerAll(
+                createEntry(EntityGensMerchant.class, EntityGensMerchant::new, "merchant").egg(0xFFDE66, 0x1354AD).build(),
+                createEntry(EntityGensSoldier.class, EntityGensSoldier::new, "soldier").egg(0xFFDE66, 0x354687).build()
+        );
     }
 
     private static <T extends Entity> EntityEntryBuilder<T> createEntry(Class<? extends T> clazz, Function<World, T> entityFactory, String name) {
@@ -35,5 +39,6 @@ public class ModEntities {
 
     public static void registerRenders() {
         RenderingRegistry.registerEntityRenderingHandler(EntityGensMerchant.class, renderManager -> new RenderBiped<>(renderManager, new ModelBiped(), 1.0f));
+        RenderingRegistry.registerEntityRenderingHandler(EntityGensSoldier.class, renderManager -> new RenderBiped<>(renderManager, new ModelBiped(), 1.0f));
     }
 }
