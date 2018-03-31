@@ -2,6 +2,7 @@ package ladysnake.gens;
 
 import ladylib.LadyLib;
 import ladylib.misc.TemplateUtil;
+import ladysnake.gens.entity.HarTradeList;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
@@ -17,6 +18,7 @@ public class Gens {
     public void preInit(FMLPreInitializationEvent event) {
         lib = LadyLib.initLib(event);
         lib.makeCreativeTab(() -> new ItemStack(Items.EMERALD));
+        GensProxy.proxy.preInit();
     }
 
     @Mod.EventHandler
@@ -24,5 +26,6 @@ public class Gens {
         // These 2 lines can be removed at any time without breaking anything
         TemplateUtil.generateStubModels(lib.getItemRegistrar(), "../src/main/resources");
         TemplateUtil.generateStubBlockstates(lib.getBlockRegistrar(), "../src/main/resources");
+        HarTradeList.initTrades();
     }
 }
