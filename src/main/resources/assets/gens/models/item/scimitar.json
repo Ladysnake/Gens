@@ -1,6 +1,6 @@
 {
-  "forge_marker": 1,
-  "variants": {
-    "normal": {"model": "gens:items/scimitar"}
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gens:items/scimitar:items/gens:items/scimitar"
   }
 }
