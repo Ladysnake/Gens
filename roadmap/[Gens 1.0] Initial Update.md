@@ -70,6 +70,7 @@ Gens plans to add pods of human and human like people in order to make you feel 
   - When a sma bottle is used, it leaves an empty bottle after the craft.
   - Sma bottles can be drunk, resulting in the effects being applied to the drinker and amplified (x2, Wither I -> Wither II, don't do that).
   - Sma types:
-    - Zil sma: Applies Wither I.
-    - Waq sma: Applies Slowness III.
-    - Jue sma: Applies Hunger II.
+    - Sma: Applies Poison II, Color: Green.
+    - Zil sma: Applies Wither I, Color: Black.
+    - Waq sma: Applies Slowness II, Color: Blue.
+    - Jue sma: Applies Hunger II, Color: Brown.
