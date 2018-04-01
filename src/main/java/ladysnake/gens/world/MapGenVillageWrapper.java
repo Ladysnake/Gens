@@ -14,9 +14,9 @@ public class MapGenVillageWrapper extends MapGenVillage {
 
     public MapGenVillageWrapper(MapGenVillage original) {
         this.original = original;
-        this.gens = new MapGenGens();
-        this.size = original.size;
-        this.distance = original.distance;
+        size = original.size;
+        distance = original.distance;
+        gens = new MapGenGens(distance, size);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class MapGenVillageWrapper extends MapGenVillage {
 
     @Override
     public synchronized boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord) {
-        return original.generateStructure(worldIn, randomIn, chunkCoord) || gens.generateStructure(worldIn, randomIn, chunkCoord);
+        return original.generateStructure(worldIn, randomIn, chunkCoord) | gens.generateStructure(worldIn, randomIn, chunkCoord);
     }
 
     @Override
