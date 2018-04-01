@@ -1,14 +1,27 @@
 package ladysnake.gens.entity;
 
-import net.minecraft.entity.passive.EntityVillager;
+import ladysnake.gens.Gens;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.RegistryBuilder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class GensEthnicity {
+public class GensEthnicity extends IForgeRegistryEntry.Impl<GensEthnicity> {
+    public static IForgeRegistry<GensEthnicity> REGISTRY;
+
+    @SubscribeEvent
+    public static void addRegistries(RegistryEvent.NewRegistry event) {
+        REGISTRY = new RegistryBuilder<GensEthnicity>()
+                .setType(GensEthnicity.class)
+                .setName(new ResourceLocation(Gens.MOD_ID, "ethnicities"))
+                .create();
+    }
+
     public static final GensEthnicity HAR;
 
     static {
@@ -31,16 +44,4 @@ public class GensEthnicity {
         return professions.get(professionName);
     }
 
-    public class GensProfession {
-        private List<EntityVillager.ITradeList> trades = new ArrayList<>();
-        private ResourceLocation texture;
-
-        public void addTrade(EntityVillager.ITradeList trade) {
-            trades.add(trade);
-        }
-
-        public List<EntityVillager.ITradeList> getTrades() {
-            return trades;
-        }
-    }
 }
