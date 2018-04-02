@@ -1,10 +1,9 @@
 package ladysnake.gens.init;
 
 import ladysnake.gens.Gens;
+import ladysnake.gens.client.model.RenderGensVillager;
 import ladysnake.gens.entity.EntityGensMerchant;
 import ladysnake.gens.entity.EntityGensSoldier;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -38,7 +37,7 @@ public class ModEntities {
     }
 
     public static void registerRenders() {
-        RenderingRegistry.registerEntityRenderingHandler(EntityGensMerchant.class, renderManager -> new RenderBiped<>(renderManager, new ModelBiped(), 1.0f));
-        RenderingRegistry.registerEntityRenderingHandler(EntityGensSoldier.class, renderManager -> new RenderBiped<>(renderManager, new ModelBiped(), 1.0f));
+        RenderingRegistry.registerEntityRenderingHandler(EntityGensMerchant.class, RenderGensVillager::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityGensSoldier.class, RenderGensVillager::new);
     }
 }

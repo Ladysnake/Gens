@@ -1,6 +1,8 @@
 package ladysnake.gens.entity;
 
 import ladysnake.gens.init.ModItems;
+import ladysnake.gens.item.ItemScimitar;
+import ladysnake.gens.item.ItemSma;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Blocks;
@@ -16,16 +18,17 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class HarTradeList implements EntityVillager.ITradeList {
-    private static final List<Pair<ItemStack, EntityVillager.PriceInfo>> canBuy = new ArrayList<>();
-    private static final List<Pair<ItemStack, EntityVillager.PriceInfo>> canSell = new ArrayList<>();
+    private static final List<Pair<Supplier<ItemStack>, EntityVillager.PriceInfo>> canBuy = new ArrayList<>();
+    private static final List<Pair<Supplier<ItemStack>, EntityVillager.PriceInfo>> canSell = new ArrayList<>();
 
     public static void initTrades() {
         addBuyItem(Items.IRON_INGOT, 6, 8);
         addBuyItem(Items.GOLD_NUGGET, 10, 16);
         addBuyItem(Items.EMERALD, 2, 6);
-        addItem(canBuy, new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getMetadata()), 16, 18);
+        addItem(canBuy, () -> new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getMetadata()), 16, 18);
         addBuyItem(Items.DIAMOND, 1, 1);
         addBuyItem(Items.LAVA_BUCKET, 1, 1);
         addBuyItem(Items.WATER_BUCKET, 1, 1);
@@ -33,27 +36,27 @@ public class HarTradeList implements EntityVillager.ITradeList {
         addBuyItem(Items.MUTTON, 6, 8);
         addBuyItem(Items.BEEF, 4, 8);
         addBuyItem(Items.STICK, 32, 48);
-        addItem(canBuy, new ItemStack(Blocks.LOG), 16, 20);
+        addItem(canBuy, () -> new ItemStack(Blocks.LOG), 16, 20);
         addBuyItem(Items.PAPER, 20, 30);
-        addItem(canBuy, new ItemStack(Blocks.WOOL), 18, 26);
+        addItem(canBuy, () -> new ItemStack(Blocks.WOOL), 18, 26);
         addBuyItem(Items.LEATHER, 6, 8);
-        addSellItem(ModItems.SCIMITAR, 1, 1);
+        addItem(canSell, ItemScimitar::generateScimitar, 1, 1);
         addSellItem(Items.ARROW, 18, 26);
-        addSellItem(ModItems.HAR_SMA, 4, 6);
+        addItem(canSell, ItemSma::getRandomSmaBottle, 4, 6);
         addSellItem(ModItems.CACTUS_STEW, 1, 1);
         addSellItem(ModItems.SAND_WORM, 8, 16);
-        addItem(canSell, new ItemStack(Blocks.SAND), 26, 40);
+        addItem(canSell, () -> new ItemStack(Blocks.SAND), 26, 40);
     }
 
     private static void addBuyItem(Item item, int min, int max) {
-        addItem(canBuy, new ItemStack(item), min, max);
+        addItem(canBuy, () -> new ItemStack(item), min, max);
     }
 
     private static void addSellItem(Item item, int min, int max) {
-        addItem(canSell, new ItemStack(item), min, max);
+        addItem(canSell, () -> new ItemStack(item), min, max);
     }
 
-    private static void addItem(List<Pair<ItemStack, EntityVillager.PriceInfo>> list, ItemStack stack, int min, int max) {
+    private static void addItem(List<Pair<Supplier<ItemStack>, EntityVillager.PriceInfo>> list, Supplier<ItemStack> stack, int min, int max) {
         list.add(Pair.of(stack, new EntityVillager.PriceInfo(min, max)));
     }
 
@@ -73,9 +76,9 @@ public class HarTradeList implements EntityVillager.ITradeList {
         }
     }
 
-    private static ItemStack getTradeItemStack(List<Pair<ItemStack, EntityVillager.PriceInfo>> itemList, Random random) {
-        Pair<ItemStack, EntityVillager.PriceInfo> entry = itemList.get(random.nextInt(itemList.size()));
-        ItemStack stack = entry.getKey().copy();
+    private static ItemStack getTradeItemStack(List<Pair<Supplier<ItemStack>, EntityVillager.PriceInfo>> itemList, Random random) {
+        Pair<Supplier<ItemStack>, EntityVillager.PriceInfo> entry = itemList.get(random.nextInt(itemList.size()));
+        ItemStack stack = entry.getKey().get();
         stack.setCount(entry.getValue().getPrice(random));
         return stack;
     }

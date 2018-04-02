@@ -7,12 +7,16 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Gens.MOD_ID, name = "Gens", version = "@VERSION@")
 public class Gens {
     public static final String MOD_ID = "gens";
     public static LadyLib lib;
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -27,5 +31,10 @@ public class Gens {
         TemplateUtil.generateStubModels(lib.getItemRegistrar(), "../src/main/resources");
         TemplateUtil.generateStubBlockstates(lib.getBlockRegistrar(), "../src/main/resources");
         HarTradeList.initTrades();
+    }
+
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent event) {
+        GensProxy.proxy.postInit();
     }
 }

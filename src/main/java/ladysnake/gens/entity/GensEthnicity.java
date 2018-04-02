@@ -1,12 +1,8 @@
 package ladysnake.gens.entity;
 
-import ladysnake.gens.Gens;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import net.minecraftforge.registries.RegistryBuilder;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,34 +10,25 @@ import java.util.Map;
 public class GensEthnicity extends IForgeRegistryEntry.Impl<GensEthnicity> {
     public static IForgeRegistry<GensEthnicity> REGISTRY;
 
-    @SubscribeEvent
-    public static void addRegistries(RegistryEvent.NewRegistry event) {
-        REGISTRY = new RegistryBuilder<GensEthnicity>()
-                .setType(GensEthnicity.class)
-                .setName(new ResourceLocation(Gens.MOD_ID, "ethnicities"))
-                .create();
+    protected Map<String, GensProfession> professions = new HashMap<>();
+    protected String name;
+
+    public GensEthnicity(String name) {
+        this.name = name;
     }
 
-    public static final GensEthnicity HAR;
-
-    static {
-        HAR = new GensEthnicity();
-        HAR.registerProfession("dealer");
-        HAR.getProfession("dealer").addTrade(new HarTradeList());
-    }
-
-    private Map<String, GensProfession> professions = new HashMap<>();
-
-    public GensEthnicity() {
-
-    }
-
-    public void registerProfession(String professionName) {
-        professions.put(professionName, new GensProfession());
+    @SafeVarargs
+    public final GensProfession registerProfession(String professionName, Pair<String, String>... textures) {
+        GensProfession profession = new GensProfession(this, professionName, textures);
+        professions.put(professionName, profession);
+        return profession;
     }
 
     public GensProfession getProfession(String professionName) {
         return professions.get(professionName);
     }
 
+    public String getName() {
+        return name;
+    }
 }

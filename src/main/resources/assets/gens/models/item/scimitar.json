@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "gens:items/scimitar:items/gens:items/scimitar"
-  }
-}

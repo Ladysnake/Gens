@@ -1,0 +1,9 @@
+gens.tooltip.sma=Coated in %s sma (%s uses left)
+item.gens.cactus_stew.name=Cactus Stew
+item.gens.har_sma_jue.name=Jue Sma Bottle
+item.gens.har_sma_sma.name=Sma Bottle
+item.gens.har_sma_waq.name=Waq Sma Bottle
+item.gens.har_sma_zil.name=Zil Sma Bottle
+item.gens.scimitar.name=Scimitar
+item.gens.sand_worm.name=Fried Worms
+itemGroup.Gens=Gens

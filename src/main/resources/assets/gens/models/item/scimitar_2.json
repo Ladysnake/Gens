@@ -1,0 +1,7 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "gens:items/scimitar_2",
+    "layer1": "gens:items/scimitar_gem"
+  }
+}

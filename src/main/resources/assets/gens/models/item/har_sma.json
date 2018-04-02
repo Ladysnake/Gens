@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "gens:items/har_sma:items/gens:items/har_sma"
+    "layer0": "gens:items/sma_bottle",
+    "layer1": "gens:items/sma_overlay"
   }
 }

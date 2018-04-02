@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "gens:items/sand_worm:items/gens:items/sand_worm"
+    "layer0": "gens:items/fried_worms"
   }
 }

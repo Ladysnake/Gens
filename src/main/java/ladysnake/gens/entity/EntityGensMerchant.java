@@ -1,5 +1,6 @@
 package ladysnake.gens.entity;
 
+import ladysnake.gens.init.ModEthnicities;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -27,7 +28,7 @@ public class EntityGensMerchant extends EntityGensVillager implements IMerchant 
     private MerchantRecipeList buyingList;
 
     public EntityGensMerchant(World worldIn) {
-        super(worldIn);
+        super(worldIn, ModEthnicities.HAR.getProfession("dealer"));
     }
 
     @Override

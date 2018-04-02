@@ -1,22 +1,44 @@
 package ladysnake.gens.entity;
 
+import ladysnake.gens.init.ModEthnicities;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
 public abstract class EntityGensVillager extends EntityAgeable implements INpc {
-    protected GensProfession profession = GensEthnicity.HAR.getProfession("dealer");
+    protected GensProfession profession;
+    protected int skin;
 
+    @SuppressWarnings("unused")
     public EntityGensVillager(World worldIn) {
+        this(worldIn, ModEthnicities.HAR.getProfession("dealer"));
+    }
+
+    public EntityGensVillager(World worldIn, GensProfession profession) {
         super(worldIn);
+        this.profession = profession;
+        this.skin = rand.nextInt(profession.getTextures().length);
         this.setSize(0.6F, 1.95F);
+    }
+
+    public ResourceLocation getTexture() {
+        ResourceLocation[] professionTextures = profession.getTextures();
+        if (skin > professionTextures.length)
+            skin = 0;
+        return professionTextures[skin];
+    }
+
+    public GensProfession getProfession() {
+        return profession;
     }
 
     protected void initEntityAI() {
@@ -89,5 +111,22 @@ public abstract class EntityGensVillager extends EntityAgeable implements INpc {
         }
 
         return flag;
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setInteger("skin", skin);
+        compound.setString("ethnicity", profession.getParent().getRegistryName().toString());
+        compound.setString("profession", profession.getName());
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        skin = compound.getInteger("skin");
+        GensEthnicity ethnicity = GensEthnicity.REGISTRY.getValue(new ResourceLocation(compound.getString("ethnicity")));
+        if (ethnicity != null)
+            this.profession = ethnicity.getProfession(compound.getString("profession"));
     }
 }
