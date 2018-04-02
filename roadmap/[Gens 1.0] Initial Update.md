@@ -77,3 +77,9 @@ Gens plans to add pods of human and human like people in order to make you feel 
     - Zil sma: Applies Wither I, Color: Black.
     - Waq sma: Applies Slowness II, Color: Blue.
     - Jue sma: Applies Hunger II, Color: Brown.
+- Cactus stew:
+  - Mushroom stew reskin.
+- Fried sand worm:
+  - Grants back 4 food points.
+  - May randomly apply nausea (10% chance) for 5 seconds.
+  - Gives back a bowl when consumed.
