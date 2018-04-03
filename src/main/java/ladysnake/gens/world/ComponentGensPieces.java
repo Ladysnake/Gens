@@ -1,6 +1,7 @@
 package ladysnake.gens.world;
 
 import ladysnake.gens.entity.*;
+import ladysnake.gens.init.ModEthnicities;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -199,7 +200,17 @@ public class ComponentGensPieces {
                     case "dealer":
                         villager = new EntityGensMerchant(worldIn);
                 } */
-                EntityGensVillager villager = rand.nextBoolean() ? new EntityGensSoldier(worldIn) : new EntityGensMerchant(worldIn);
+                EntityGensVillager villager;
+                switch (rand.nextInt(3)) {
+                    case 0:
+                        villager = new EntityGensMerchant(worldIn, ModEthnicities.HAR.getProfession("dealer"));
+                        break;
+                    case 1:
+                        villager = new EntityGensMerchant(worldIn, ModEthnicities.HAR.getProfession("member"));
+                        break;
+                    default:
+                        villager = new EntityGensSoldier(worldIn);
+                }
 
                 villager.setLocationAndAngles(x + 0.5D, y, z + 0.5D, 0.0F, 0.0F);
                 worldIn.spawnEntity(villager);
