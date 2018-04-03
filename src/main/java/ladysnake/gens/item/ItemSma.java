@@ -158,13 +158,15 @@ public class ItemSma extends Item implements ICustomLocation {
     }
 
     public static void setSmaType(ItemStack stack, Types smaType) {
-        if (smaType == null && stack.hasTagCompound())
+        if (smaType == null && stack.hasTagCompound()) {
             stack.getTagCompound().removeTag(NBT_SMA);
-        NBTTagCompound compound = ItemUtil.getOrCreateCompound(stack);
-        NBTTagCompound smaNBT = new NBTTagCompound();
-        smaNBT.setString("type", smaType.name());
-        smaNBT.setInteger("uses", 30);
-        compound.setTag(NBT_SMA, smaNBT);
+        } else {
+            NBTTagCompound compound = ItemUtil.getOrCreateCompound(stack);
+            NBTTagCompound smaNBT = new NBTTagCompound();
+            smaNBT.setString("type", smaType.name());
+            smaNBT.setInteger("uses", 30);
+            compound.setTag(NBT_SMA, smaNBT);
+        }
     }
 
     @Override
