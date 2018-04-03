@@ -5,6 +5,8 @@ import ladylib.misc.TemplateUtil;
 import ladysnake.gens.entity.HarTradeList;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import ladysnake.gens.world.EventHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -23,6 +25,7 @@ public class Gens {
         lib = LadyLib.initLib(event);
         lib.makeCreativeTab(() -> new ItemStack(Items.EMERALD));
         GensProxy.proxy.preInit();
+        MinecraftForge.TERRAIN_GEN_BUS.register(new EventHandler());
     }
 
     @Mod.EventHandler
