@@ -136,13 +136,16 @@ public abstract class EntityGensVillager extends EntityAgeable implements INpc, 
         PacketBuffer buf = new PacketBuffer(buffer);
         buf.writeString(profession.getParent().getRegistryName().toString());
         buf.writeString(profession.getName());
+        buf.writeInt(skin);
     }
 
     @Override
     public void readSpawnData(ByteBuf additionalData) {
         PacketBuffer buf = new PacketBuffer(additionalData);
         GensEthnicity ethnicity = GensEthnicity.REGISTRY.getValue(new ResourceLocation(buf.readString(40)));
+        String profession = buf.readString(40);
         if (ethnicity != null)
-            this.profession = ethnicity.getProfession(buf.readString(40));
+            this.profession = ethnicity.getProfession(profession);
+        skin = buf.readInt();
     }
 }

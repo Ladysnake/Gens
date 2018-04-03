@@ -30,7 +30,11 @@ public class EntityGensMerchant extends EntityGensVillager implements IMerchant 
     private MerchantRecipeList buyingList;
 
     public EntityGensMerchant(World worldIn) {
-        super(worldIn, ModEthnicities.HAR.getProfession("dealer"));
+        this(worldIn, ModEthnicities.HAR.getProfession("dealer"));
+    }
+
+    public EntityGensMerchant(World worldIn, GensProfession profession) {
+        super(worldIn, profession);
     }
 
     @Override
