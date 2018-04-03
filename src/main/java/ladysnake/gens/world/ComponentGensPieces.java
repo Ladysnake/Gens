@@ -14,9 +14,7 @@ import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class ComponentGensPieces {
     private static final Map<ResourceLocation, StructureType> subTypeRegistry = new HashMap<>();
@@ -26,6 +24,8 @@ public class ComponentGensPieces {
     public static final StructureType HAR_DORM = new StructureType(new ResourceLocation("gens", "har/har_dorm"), 9, 9, 9);
     public static final StructureType HAR_FORGE = new StructureType(new ResourceLocation("gens", "har/har_forge"), 9, 9, 9);
     public static final StructureType HAR_STORAGE = new StructureType(new ResourceLocation("gens", "har/har_storage"), 9, 9, 9);
+
+    public static final List<StructureType> HAR_STRUCTURES = Arrays.asList(HAR_CAMPFIRE, HAR_DORM, HAR_FORGE, HAR_STORAGE);
 
     private static void registerStructureType(StructureType structureType) {
         subTypeRegistry.put(structureType.id, structureType);
@@ -40,7 +40,7 @@ public class ComponentGensPieces {
         registerStructureType(HAR_STORAGE);
     }
 
-    private static class StructureType {
+    public static class StructureType {
         private final ResourceLocation id;
         /** The size of the bounding box for this feature in the X axis */
         private final int sizeX;
