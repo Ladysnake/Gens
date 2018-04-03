@@ -136,6 +136,16 @@ public class ComponentGensPieces {
                     TemplateManager templatemanager = worldIn.getSaveHandler().getStructureTemplateManager();
                     Template template = templatemanager.getTemplate(minecraftserver, structureType.id);
                     template.addBlocksToWorldChunk(worldIn, zeroPos, placementsettings);
+
+                    for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(box.minX, box.minY, box.minZ, box.maxX, box.minY, box.maxZ)) {
+                        int initialY = pos.getY();
+                        for (int y = box.minY - 1; y >= 0; y--) {
+                            pos.setY(y);
+                            if (worldIn.isBlockNormalCube(pos, true)) break;
+                            worldIn.setBlockState(pos, Blocks.SAND.getDefaultState());
+                        }
+                        pos.setY(initialY);
+                    }
                     /* worldIn.setBlockState(new BlockPos(box.minX, box.minY, box.minZ), Blocks.BEDROCK.getDefaultState());
                     worldIn.setBlockState(new BlockPos(box.maxX, box.minY, box.minZ), Blocks.BEDROCK.getDefaultState());
                     worldIn.setBlockState(new BlockPos(box.minX, box.maxY, box.minZ), Blocks.BEDROCK.getDefaultState());
