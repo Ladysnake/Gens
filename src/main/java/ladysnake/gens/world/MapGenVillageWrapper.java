@@ -12,11 +12,11 @@ public class MapGenVillageWrapper extends MapGenVillage {
     private final MapGenVillage original;
     private final MapGenGens gens;
 
-    public MapGenVillageWrapper(MapGenVillage original) {
-        this.original = original;
+    public MapGenVillageWrapper(MapGenVillage original, MapGenGens gens) {
         size = original.size;
         distance = original.distance;
-        gens = new MapGenGens(distance, size);
+        this.original = original;
+        this.gens = gens;
     }
 
     @Override

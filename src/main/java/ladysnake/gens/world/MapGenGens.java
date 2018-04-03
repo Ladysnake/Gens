@@ -52,8 +52,8 @@ public class MapGenGens extends MapGenStructure {
         int gridX = Math.floorDiv(chunkX, gridUnit);
         int gridZ = Math.floorDiv(chunkZ, gridUnit);
         Random random = world.setRandomSeed(gridX, gridZ, 0xFF65AD);
-        int gridChunkX = gridX * gridUnit + random.nextInt(gridUnit - 8);
-        int gridChunkZ = gridZ * gridUnit + random.nextInt(gridUnit - 8);
+        int gridChunkX = gridX * gridUnit + random.nextInt(3 * gridUnit / 4);
+        int gridChunkZ = gridZ * gridUnit + random.nextInt(3 * gridUnit / 4);
 
         return chunkX == gridChunkX && chunkZ == gridChunkZ && this.world.getBiomeProvider().areBiomesViable(chunkX * 16 + 8, chunkZ * 16 + 8, 0, HAR_SPAWN_BIOMES);
 
