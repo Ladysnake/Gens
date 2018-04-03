@@ -33,7 +33,7 @@ public class ItemScimitar extends ItemSword {
         Item scimitar = ForgeRegistries.ITEMS.getValue(new ResourceLocation(Gens.MOD_ID, "scimitar_" + (rand.nextInt(4) + 1)));
         if (scimitar == null) return ItemStack.EMPTY;
         ItemStack ret = new ItemStack(scimitar);
-        ItemUtil.getOrCreateCompound(ret).setInteger("gemColor", rand.nextInt(0xFF) << 4 & rand.nextInt(0xFF) << 2 & rand.nextInt(0xFF));
+        ItemUtil.getOrCreateCompound(ret).setInteger("gemColor", rand.nextInt(0xFF) << 4 | rand.nextInt(0xFF) << 2 | rand.nextInt(0xFF));
         return ret;
     }
 
