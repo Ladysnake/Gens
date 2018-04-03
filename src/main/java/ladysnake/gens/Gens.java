@@ -31,8 +31,6 @@ public class Gens {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         // These 2 lines can be removed at any time without breaking anything
-        TemplateUtil.generateStubModels(lib.getItemRegistrar(), "../src/main/resources");
-        TemplateUtil.generateStubBlockstates(lib.getBlockRegistrar(), "../src/main/resources");
         HarTradeList.initTrades();
     }
 
