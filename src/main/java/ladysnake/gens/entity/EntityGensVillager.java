@@ -1,5 +1,6 @@
 package ladysnake.gens.entity;
 
+import io.netty.buffer.ByteBuf;
 import ladysnake.gens.init.ModEthnicities;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -7,14 +8,16 @@ import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
 import javax.annotation.Nonnull;
 
-public abstract class EntityGensVillager extends EntityAgeable implements INpc {
+public abstract class EntityGensVillager extends EntityAgeable implements INpc, IEntityAdditionalSpawnData {
     protected GensProfession profession;
     protected int skin;
 
@@ -43,13 +46,10 @@ public abstract class EntityGensVillager extends EntityAgeable implements INpc {
 
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
-//        this.tasks.addTask(1, new EntityAITradePlayer(this));
-//        this.tasks.addTask(1, new EntityAILookAtTradePlayer(this));
         this.tasks.addTask(2, new EntityAIMoveIndoors(this));
         this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));
         this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.6D));
-//        this.tasks.addTask(6, new EntityAIVillagerMate(this));
         this.tasks.addTask(9, new EntityAIWatchClosest2(this, EntityPlayer.class, 3.0F, 1.0F));
 //        this.tasks.addTask(9, new EntityAIVillagerInteract(this));
         this.tasks.addTask(9, new EntityAIWanderAvoidWater(this, 0.6D));
@@ -65,6 +65,7 @@ public abstract class EntityGensVillager extends EntityAgeable implements INpc {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.65D);
     }
 
     @Override
@@ -128,5 +129,20 @@ public abstract class EntityGensVillager extends EntityAgeable implements INpc {
         GensEthnicity ethnicity = GensEthnicity.REGISTRY.getValue(new ResourceLocation(compound.getString("ethnicity")));
         if (ethnicity != null)
             this.profession = ethnicity.getProfession(compound.getString("profession"));
+    }
+
+    @Override
+    public void writeSpawnData(ByteBuf buffer) {
+        PacketBuffer buf = new PacketBuffer(buffer);
+        buf.writeString(profession.getParent().getRegistryName().toString());
+        buf.writeString(profession.getName());
+    }
+
+    @Override
+    public void readSpawnData(ByteBuf additionalData) {
+        PacketBuffer buf = new PacketBuffer(additionalData);
+        GensEthnicity ethnicity = GensEthnicity.REGISTRY.getValue(new ResourceLocation(buf.readString(40)));
+        if (ethnicity != null)
+            this.profession = ethnicity.getProfession(buf.readString(40));
     }
 }
