@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
@@ -127,14 +126,28 @@ public class ComponentGensPieces {
                 return false;
             } else {
                 StructureBoundingBox box = this.getBoundingBox();
-                BlockPos pos = new BlockPos(box.minX, box.minY, box.minZ);
-                Rotation[] rotations = Rotation.values();
-                MinecraftServer minecraftserver = worldIn.getMinecraftServer();
-                TemplateManager templatemanager = worldIn.getSaveHandler().getStructureTemplateManager();
-                PlacementSettings placementsettings = new PlacementSettings().setRotation(rotations[randomIn.nextInt(rotations.length)]).setReplacedBlock(Blocks.STRUCTURE_VOID).setBoundingBox(box);
-                Template template = templatemanager.getTemplate(minecraftserver, structureType.id);
-                template.addBlocksToWorldChunk(worldIn, pos, placementsettings);
-                return true;
+                BlockPos middle = new BlockPos((box.minX + box.maxX) / 2, (box.minY + box.maxY) / 2, (box.minZ + box.maxZ) / 2);
+                if (structureBoundingBoxIn.isVecInside(middle)) {
+                    PlacementSettings placementsettings = new PlacementSettings().setRotation(rotation).setMirror(mirror).setReplacedBlock(Blocks.STRUCTURE_VOID).setBoundingBox(box);
+
+                    BlockPos minPos = new BlockPos(box.minX, box.minY, box.minZ);
+                    BlockPos zeroPos = Template.getZeroPositionWithTransform(minPos, mirror, rotation, box.getXSize(), box.getZSize());
+                    MinecraftServer minecraftserver = worldIn.getMinecraftServer();
+                    TemplateManager templatemanager = worldIn.getSaveHandler().getStructureTemplateManager();
+                    Template template = templatemanager.getTemplate(minecraftserver, structureType.id);
+                    template.addBlocksToWorldChunk(worldIn, zeroPos, placementsettings);
+                    /* worldIn.setBlockState(new BlockPos(box.minX, box.minY, box.minZ), Blocks.BEDROCK.getDefaultState());
+                    worldIn.setBlockState(new BlockPos(box.maxX, box.minY, box.minZ), Blocks.BEDROCK.getDefaultState());
+                    worldIn.setBlockState(new BlockPos(box.minX, box.maxY, box.minZ), Blocks.BEDROCK.getDefaultState());
+                    worldIn.setBlockState(new BlockPos(box.maxX, box.maxY, box.minZ), Blocks.BEDROCK.getDefaultState());
+                    worldIn.setBlockState(new BlockPos(box.minX, box.minY, box.maxZ), Blocks.BEDROCK.getDefaultState());
+                    worldIn.setBlockState(new BlockPos(box.maxX, box.minY, box.maxZ), Blocks.BEDROCK.getDefaultState());
+                    worldIn.setBlockState(new BlockPos(box.minX, box.maxY, box.maxZ), Blocks.BEDROCK.getDefaultState());
+                    worldIn.setBlockState(new BlockPos(box.maxX, box.maxY, box.maxZ), Blocks.BEDROCK.getDefaultState()); */
+                    return true;
+                }
+
+                return false;
             }
         }
     }

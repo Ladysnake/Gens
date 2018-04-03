@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 public class MapGenGens extends MapGenStructure {
-    //public static List<Biome> HAR_SPAWN_BIOMES = Arrays.asList(Biomes.DESERT, Biomes.DESERT_HILLS);
+    //public static List<Biome> HAR_SPAWN_BIOMES = Arrays.asList(Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MESA);
     public static List<Biome> HAR_SPAWN_BIOMES = ForgeRegistries.BIOMES.getValues(); //TODO: Limit this before release!
 
     static {
