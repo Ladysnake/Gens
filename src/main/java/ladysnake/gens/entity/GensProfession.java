@@ -24,7 +24,7 @@ public class GensProfession {
         String prefix = "textures/entity/"  + parent.getName() + "/";
         for (int i = 0; i < textures.length; i++) {
             this.textures[i] = new ResourceLocation(Gens.MOD_ID, prefix + textures[i].getKey() + ".png");
-            this.texturesLayer[i] = new ResourceLocation(Gens.MOD_ID, prefix + textures[i].getKey() + ".png");
+            this.texturesLayer[i] = new ResourceLocation(Gens.MOD_ID, prefix + textures[i].getValue() + ".png");
         }
     }
 
