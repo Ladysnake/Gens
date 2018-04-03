@@ -1,5 +1,7 @@
 package ladysnake.gens.world;
 
+import ladysnake.gens.entity.*;
+import ladysnake.gens.init.ModEthnicities;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -19,11 +21,19 @@ import java.util.*;
 public class ComponentGensPieces {
     private static final Map<ResourceLocation, StructureType> subTypeRegistry = new HashMap<>();
 
-    public static final StructureType TEST = new StructureType(new ResourceLocation("gens", "test/test"), 8, 8, 8);
-    public static final StructureType HAR_CAMPFIRE = new StructureType(new ResourceLocation("gens", "har/har_campfire"), 9, 9, 9);
-    public static final StructureType HAR_DORM = new StructureType(new ResourceLocation("gens", "har/har_dorm"), 9, 9, 9);
-    public static final StructureType HAR_FORGE = new StructureType(new ResourceLocation("gens", "har/har_forge"), 9, 9, 9);
-    public static final StructureType HAR_STORAGE = new StructureType(new ResourceLocation("gens", "har/har_storage"), 9, 9, 9);
+    public static final StructureType TEST = new StructureType(new ResourceLocation("gens", "test/test"), 8, 8, 8, Collections.emptyList());
+    public static final StructureType HAR_CAMPFIRE = new StructureType(new ResourceLocation("gens", "har/har_campfire"), 9, 9, 9, Arrays.asList(
+        new BlockPos(2, 1, 2), new BlockPos(6, 1, 2), new BlockPos(2, 1, 6), new BlockPos(6, 1, 6)
+    ));
+    public static final StructureType HAR_DORM = new StructureType(new ResourceLocation("gens", "har/har_dorm"), 9, 9, 9, Arrays.asList(
+        new BlockPos(3, 1, 3), new BlockPos(5, 1, 3), new BlockPos(3, 1, 5), new BlockPos(5, 1, 5)
+    ));
+    public static final StructureType HAR_FORGE = new StructureType(new ResourceLocation("gens", "har/har_forge"), 9, 9, 9, Arrays.asList(
+        new BlockPos(3, 1, 3), new BlockPos(5, 1, 3), new BlockPos(3, 1, 5), new BlockPos(5, 1, 5)
+    ));
+    public static final StructureType HAR_STORAGE = new StructureType(new ResourceLocation("gens", "har/har_storage"), 9, 9, 9, Arrays.asList(
+        new BlockPos(3, 1, 3), new BlockPos(5, 1, 3), new BlockPos(3, 1, 5), new BlockPos(5, 1, 5)
+    ));
 
     public static final List<StructureType> HAR_STRUCTURES = Arrays.asList(HAR_CAMPFIRE, HAR_DORM, HAR_FORGE, HAR_STORAGE);
 
@@ -48,12 +58,14 @@ public class ComponentGensPieces {
         private final int sizeY;
         /** The size of the bounding box for this feature in the Z axis */
         private final int sizeZ;
+        private final List<BlockPos> spawnPositions;
 
-        private StructureType(ResourceLocation id, int sizeX, int sizeY, int sizeZ) {
+        private StructureType(ResourceLocation id, int sizeX, int sizeY, int sizeZ, List<BlockPos> spawnPositions) {
             this.id = id;
             this.sizeX = sizeX;
             this.sizeY = sizeY;
             this.sizeZ = sizeZ;
+            this.spawnPositions = spawnPositions;
         }
     }
 
@@ -154,10 +166,38 @@ public class ComponentGensPieces {
                     worldIn.setBlockState(new BlockPos(box.maxX, box.minY, box.maxZ), Blocks.BEDROCK.getDefaultState());
                     worldIn.setBlockState(new BlockPos(box.minX, box.maxY, box.maxZ), Blocks.BEDROCK.getDefaultState());
                     worldIn.setBlockState(new BlockPos(box.maxX, box.maxY, box.maxZ), Blocks.BEDROCK.getDefaultState()); */
+
+                    spawnVillagers(worldIn, randomIn, 1 + randomIn.nextInt(2));
                     return true;
                 }
 
                 return false;
+            }
+        }
+
+        protected void spawnVillagers(World worldIn, Random rand, int count)
+        {
+            for (int i = 0; i < count; ++i)
+            {
+                BlockPos pos = structureType.spawnPositions.get(rand.nextInt(structureType.spawnPositions.size()));
+                int x = this.getXWithOffset(pos.getX(), pos.getZ());
+                int y = this.getYWithOffset(pos.getY());
+                int z = this.getZWithOffset(pos.getX(), pos.getZ());
+
+                /*GensProfession[] professions = ModEthnicities.HAR.getProfessions().values().toArray(new GensProfession[0]);
+                GensProfession profession = professions[rand.nextInt(professions.length)];
+                EntityGensVillager villager;
+                switch (profession.getName()) {
+                    case "sentinel":
+                        villager = new EntityGensSoldier(worldIn);
+                        break;
+                    case "dealer":
+                        villager = new EntityGensMerchant(worldIn);
+                } */
+                EntityGensVillager villager = rand.nextBoolean() ? new EntityGensSoldier(worldIn) : new EntityGensMerchant(worldIn);
+
+                villager.setLocationAndAngles(x + 0.5D, y, z + 0.5D, 0.0F, 0.0F);
+                worldIn.spawnEntity(villager);
             }
         }
     }
