@@ -47,4 +47,8 @@ public class GensProfession {
     public ResourceLocation[] getTextures() {
         return textures;
     }
+
+    public ResourceLocation[] getClothesTextures() {
+        return texturesLayer;
+    }
 }

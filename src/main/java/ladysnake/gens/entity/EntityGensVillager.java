@@ -40,6 +40,18 @@ public abstract class EntityGensVillager extends EntityAgeable implements INpc, 
         return professionTextures[skin];
     }
 
+    public ResourceLocation getClothesTexture() {
+        ResourceLocation[] professionTextures = profession.getClothesTextures();
+        if (skin > professionTextures.length)
+            skin = 0;
+        return professionTextures[skin];
+    }
+
+    @Override
+    protected boolean canDespawn() {
+        return true;
+    }
+
     public GensProfession getProfession() {
         return profession;
     }

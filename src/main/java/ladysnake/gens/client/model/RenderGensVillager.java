@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 public class RenderGensVillager extends RenderBiped<EntityGensVillager> {
     public RenderGensVillager(RenderManager renderManagerIn) {
         super(renderManagerIn, new ModelBiped(0, 0, 64, 64), 0.5F);
+        this.addLayer(new LayerGensClothing(this));
         LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this) {
             protected void initArmor() {
                 this.modelLeggings = new ModelBiped(0.5F, 0.0F, 64, 32);
