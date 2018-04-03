@@ -63,9 +63,9 @@ public class ComponentGensPieces {
         protected StructureType structureType;
 
 
-        protected Feature() {}
+        public Feature() {}
 
-        protected Feature(Random rand, int x, int y, int z, StructureType structureType) {
+        public Feature(Random rand, int x, int y, int z, StructureType structureType) {
             super(0);
             this.structureType = structureType;
             this.setCoordBaseMode(EnumFacing.Plane.HORIZONTAL.random(rand));
