@@ -1,7 +1,6 @@
 package ladysnake.gens.world;
 
 import ladysnake.gens.entity.*;
-import ladysnake.gens.init.ModEthnicities;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -21,19 +20,20 @@ import java.util.*;
 public class ComponentGensPieces {
     private static final Map<ResourceLocation, StructureType> subTypeRegistry = new HashMap<>();
 
-    public static final StructureType TEST = new StructureType(new ResourceLocation("gens", "test/test"), 8, 8, 8, Collections.emptyList());
-    public static final StructureType HAR_CAMPFIRE = new StructureType(new ResourceLocation("gens", "har/har_campfire"), 9, 9, 9, Arrays.asList(
+    public static final StructureType TEST = new StructureType(new ResourceLocation("gens", "test/test"), 8, 8, 8, 0, Collections.emptyList(), 0, 0);
+    public static final StructureType HAR_CAMPFIRE = new StructureType(new ResourceLocation("gens", "har/har_campfire"), 9, 9, 9, 0, Arrays.asList(
         new BlockPos(2, 1, 2), new BlockPos(6, 1, 2), new BlockPos(2, 1, 6), new BlockPos(6, 1, 6)
-    ));
-    public static final StructureType HAR_DORM = new StructureType(new ResourceLocation("gens", "har/har_dorm"), 9, 9, 9, Arrays.asList(
+    ), 0, 1);
+    public static final StructureType HAR_DORM = new StructureType(new ResourceLocation("gens", "har/har_dorm"), 9, 9, 9, 0, Arrays.asList(
         new BlockPos(3, 1, 3), new BlockPos(5, 1, 3), new BlockPos(3, 1, 5), new BlockPos(5, 1, 5)
-    ));
-    public static final StructureType HAR_FORGE = new StructureType(new ResourceLocation("gens", "har/har_forge"), 9, 9, 9, Arrays.asList(
+    ), 1, 3);
+    public static final StructureType HAR_FORGE = new StructureType(new ResourceLocation("gens", "har/har_forge"), 9, 9, 9, 0, Arrays.asList(
         new BlockPos(3, 1, 3), new BlockPos(5, 1, 3), new BlockPos(3, 1, 5), new BlockPos(5, 1, 5)
-    ));
-    public static final StructureType HAR_STORAGE = new StructureType(new ResourceLocation("gens", "har/har_storage"), 9, 9, 9, Arrays.asList(
+    ), 1, 2);
+    public static final StructureType HAR_STORAGE = new StructureType(new ResourceLocation("gens", "har/har_storage"), 9, 9, 9, 0, Arrays.asList(
         new BlockPos(3, 1, 3), new BlockPos(5, 1, 3), new BlockPos(3, 1, 5), new BlockPos(5, 1, 5)
-    ));
+    ), 0, 2);
+    public static final StructureType HAR_STASH = new StructureType(new ResourceLocation("gens", "har/har_stash"), 3, 6, 3, -2, Collections.emptyList(), 0, 0);
 
     public static final List<StructureType> HAR_STRUCTURES = Arrays.asList(HAR_CAMPFIRE, HAR_DORM, HAR_FORGE, HAR_STORAGE);
 
@@ -52,20 +52,23 @@ public class ComponentGensPieces {
 
     public static class StructureType {
         private final ResourceLocation id;
-        /** The size of the bounding box for this feature in the X axis */
         private final int sizeX;
-        /** The size of the bounding box for this feature in the Y axis */
         private final int sizeY;
-        /** The size of the bounding box for this feature in the Z axis */
         private final int sizeZ;
+        private final int offsetY;
         private final List<BlockPos> spawnPositions;
+        private final int minVillagers;
+        private final int maxVillagers;
 
-        private StructureType(ResourceLocation id, int sizeX, int sizeY, int sizeZ, List<BlockPos> spawnPositions) {
+        private StructureType(ResourceLocation id, int sizeX, int sizeY, int sizeZ, int offsetY, List<BlockPos> spawnPositions, int minVillagers, int maxVillagers) {
             this.id = id;
             this.sizeX = sizeX;
             this.sizeY = sizeY;
             this.sizeZ = sizeZ;
+            this.offsetY = offsetY;
             this.spawnPositions = spawnPositions;
+            this.minVillagers = minVillagers;
+            this.maxVillagers = maxVillagers;
         }
     }
 
@@ -114,7 +117,7 @@ public class ComponentGensPieces {
                     return false;
                 } else {
                     this.horizontalPos = i / j;
-                    this.boundingBox.offset(0, this.horizontalPos - this.boundingBox.minY + yOffset, 0);
+                    this.boundingBox.offset(0, this.horizontalPos - this.boundingBox.minY + yOffset + structureType.offsetY, 0);
                     return true;
                 }
             }
@@ -167,7 +170,7 @@ public class ComponentGensPieces {
                     worldIn.setBlockState(new BlockPos(box.minX, box.maxY, box.maxZ), Blocks.BEDROCK.getDefaultState());
                     worldIn.setBlockState(new BlockPos(box.maxX, box.maxY, box.maxZ), Blocks.BEDROCK.getDefaultState()); */
 
-                    spawnVillagers(worldIn, randomIn, 1 + randomIn.nextInt(2));
+                    spawnVillagers(worldIn, randomIn, structureType.minVillagers + randomIn.nextInt(1 + structureType.maxVillagers - structureType.minVillagers));
                     return true;
                 }
 

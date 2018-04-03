@@ -71,6 +71,7 @@ public class MapGenGens extends MapGenStructure {
 
             List<ComponentGensPieces.StructureType> plans = new ArrayList<>();
             plans.add(ComponentGensPieces.HAR_CAMPFIRE);
+            plans.add(ComponentGensPieces.HAR_STASH);
             if (rand.nextInt(2) == 0) {
                 plans.add(ComponentGensPieces.HAR_FORGE);
             }
