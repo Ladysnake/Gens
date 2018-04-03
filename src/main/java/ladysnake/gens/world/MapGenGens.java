@@ -81,6 +81,12 @@ public class MapGenGens extends MapGenStructure {
             for (int i = 1 + rand.nextInt(2); i >= 0; i--) {
                 plans.add(ComponentGensPieces.HAR_STORAGE);
             }
+            if (rand.nextBoolean()) {
+                plans.add(ComponentGensPieces.HAR_GUARD_TOWER);
+            }
+            if (rand.nextBoolean()) {
+                plans.add(ComponentGensPieces.HAR_RABBIT_PEN);
+            }
 
             Collections.shuffle(plans, rand);
 

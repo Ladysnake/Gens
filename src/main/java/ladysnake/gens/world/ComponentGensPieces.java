@@ -34,8 +34,10 @@ public class ComponentGensPieces {
         new BlockPos(3, 1, 3), new BlockPos(5, 1, 3), new BlockPos(3, 1, 5), new BlockPos(5, 1, 5)
     ), 0, 2);
     public static final StructureType HAR_STASH = new StructureType(new ResourceLocation("gens", "har/har_stash"), 3, 6, 3, -2, Collections.emptyList(), 0, 0);
-
-    public static final List<StructureType> HAR_STRUCTURES = Arrays.asList(HAR_CAMPFIRE, HAR_DORM, HAR_FORGE, HAR_STORAGE);
+    public static final StructureType HAR_GUARD_TOWER = new StructureType(new ResourceLocation("gens", "har/har_guard_tower"), 13, 7, 13, 0, Arrays.asList(
+        new BlockPos(3, 6, 3), new BlockPos(9, 6, 3), new BlockPos(3, 6, 9), new BlockPos(9, 6, 9)
+    ), 0, 2);
+    public static final StructureType HAR_RABBIT_PEN = new StructureType(new ResourceLocation("gens", "har/har_rabbit_pen"), 13, 5, 13, -3, Collections.emptyList(), 0, 0);
 
     private static void registerStructureType(StructureType structureType) {
         subTypeRegistry.put(structureType.id, structureType);
