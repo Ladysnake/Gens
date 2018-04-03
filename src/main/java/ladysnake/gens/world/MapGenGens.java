@@ -66,6 +66,8 @@ public class MapGenGens extends MapGenStructure {
     }
 
     public static class Start extends StructureStart {
+        public Start() {}
+
         public Start(World world, Random rand, int x, int z, int size) {
             super(x, z);
             ComponentGensPieces.Feature component = new ComponentGensPieces.Feature(rand, x * 16, 64, z * 16, ComponentGensPieces.HAR_FORGE);

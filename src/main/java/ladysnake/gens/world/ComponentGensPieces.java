@@ -34,6 +34,7 @@ public class ComponentGensPieces {
 
     public static void registerStructureComponents() {
         MapGenStructureIO.registerStructureComponent(Feature.class, "gens:feature");
+        registerStructureType(TEST);
         registerStructureType(HAR_CAMPFIRE);
         registerStructureType(HAR_DORM);
         registerStructureType(HAR_FORGE);
