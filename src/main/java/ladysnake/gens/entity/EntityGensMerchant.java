@@ -1,5 +1,7 @@
 package ladysnake.gens.entity;
 
+import ladysnake.gens.entity.ai.EntityGensAILookAtTradePlayer;
+import ladysnake.gens.entity.ai.EntityGensAITradePlayer;
 import ladysnake.gens.init.ModEthnicities;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IMerchant;
@@ -34,6 +36,8 @@ public class EntityGensMerchant extends EntityGensVillager implements IMerchant 
     @Override
     protected void initEntityAI() {
         super.initEntityAI();
+        this.tasks.addTask(1, new EntityGensAITradePlayer(this));
+        this.tasks.addTask(1, new EntityGensAILookAtTradePlayer(this));
         this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityZombie.class, 8.0F, 0.6D, 0.6D));
         this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityEvoker.class, 12.0F, 0.8D, 0.8D));
         this.tasks.addTask(1, new EntityAIAvoidEntity<>(this, EntityVindicator.class, 8.0F, 0.8D, 0.8D));
@@ -76,7 +80,7 @@ public class EntityGensMerchant extends EntityGensVillager implements IMerchant 
         }
     }
 
-    private boolean isTrading() {
+    public boolean isTrading() {
         return this.customer != null;
     }
 
@@ -135,7 +139,8 @@ public class EntityGensMerchant extends EntityGensVillager implements IMerchant 
     @Override
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
-        compound.setTag("tradeList", this.buyingList.getRecipiesAsTags());
+        if (this.buyingList != null)
+            compound.setTag("tradeList", this.buyingList.getRecipiesAsTags());
     }
 
     @Override

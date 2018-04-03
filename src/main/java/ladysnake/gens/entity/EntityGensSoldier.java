@@ -10,6 +10,7 @@ import net.minecraft.entity.monster.EntityVex;
 import net.minecraft.entity.monster.EntityVindicator;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
@@ -40,6 +41,8 @@ public class EntityGensSoldier extends EntityGensVillager {
     @Nullable
     @Override
     public EntityAgeable createChild(@Nonnull EntityAgeable ageable) {
-        return null;
+        EntityGensSoldier desertPerson = new EntityGensSoldier(this.world);
+        desertPerson.onInitialSpawn(this.world.getDifficultyForLocation(new BlockPos(desertPerson)), null);
+        return desertPerson;
     }
 }
