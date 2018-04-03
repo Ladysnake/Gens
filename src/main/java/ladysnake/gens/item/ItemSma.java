@@ -28,6 +28,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -92,16 +93,6 @@ public class ItemSma extends Item implements ICustomLocation {
             smaType.applyEffect((EntityLivingBase) event.getTarget(), stack.getItem() instanceof ItemScimitar ? 2 : 1);
             if (!event.getEntityPlayer().isCreative())
                 smaCompound.setInteger("uses", smaCompound.getInteger("uses") - 1);
-        }
-    }
-
-    @SubscribeEvent
-    public static void onItemTooltip(ItemTooltipEvent event) {
-        ItemStack stack = event.getItemStack();
-        NBTTagCompound smaCompound = stack.getSubCompound(NBT_SMA);
-        Types smaType = getSmaType(smaCompound);
-        if (smaType != null) {
-            event.getToolTip().add(I18n.format("gens.tooltip.sma", smaType, smaCompound.getInteger("uses")));
         }
     }
 
@@ -172,5 +163,18 @@ public class ItemSma extends Item implements ICustomLocation {
     @Override
     public ModelResourceLocation getModelLocation() {
         return new ModelResourceLocation("gens:har_sma");
+    }
+
+    @Mod.EventBusSubscriber(modid = Gens.MOD_ID, value = Side.CLIENT)
+    public static class SmaClientHandler {
+        @SubscribeEvent
+        public static void onItemTooltip(ItemTooltipEvent event) {
+            ItemStack stack = event.getItemStack();
+            NBTTagCompound smaCompound = stack.getSubCompound(NBT_SMA);
+            Types smaType = getSmaType(smaCompound);
+            if (smaType != null) {
+                event.getToolTip().add(I18n.format("gens.tooltip.sma", smaType, smaCompound.getInteger("uses")));
+            }
+        }
     }
 }
