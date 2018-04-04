@@ -140,6 +140,7 @@ public class ComponentGensPieces {
 
         @Override
         public boolean addComponentParts(World worldIn, Random randomIn, StructureBoundingBox structureBoundingBoxIn) {
+            if (structureType == null) return false; // Not sure what would cause this to be null at the moment.
             if (!this.offsetToAverageGroundLevel(worldIn, structureBoundingBoxIn, -1)) {
                 return false;
             } else {
