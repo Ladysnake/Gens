@@ -49,7 +49,7 @@ public abstract class EntityGensVillager extends EntityAgeable implements INpc, 
 
     @Override
     protected boolean canDespawn() {
-        return true;
+        return false;
     }
 
     public GensProfession getProfession() {
