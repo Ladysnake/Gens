@@ -51,6 +51,9 @@ public class ComponentGensPieces {
         registerStructureType(HAR_DORM);
         registerStructureType(HAR_FORGE);
         registerStructureType(HAR_STORAGE);
+        registerStructureType(HAR_STASH);
+        registerStructureType(HAR_GUARD_TOWER);
+        registerStructureType(HAR_RABBIT_PEN);
     }
 
     public static class StructureType {
