@@ -132,7 +132,9 @@ public class ComponentGensPieces {
         @Override
         protected void writeStructureToNBT(NBTTagCompound tagCompound) {
             tagCompound.setInteger("HPos", this.horizontalPos);
-            tagCompound.setString("StructureType", this.structureType.id.toString());
+            if (structureType != null) {
+                tagCompound.setString("StructureType", structureType.id.toString());
+            }
         }
 
         @Override
