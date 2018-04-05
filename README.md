@@ -72,3 +72,6 @@ Gens (pronounced /ˈɡɛns/) is a Minecraft mod project for Modjam 5. It adds va
   - Grants back 4 food points.
   - May randomly apply nausea (10% chance) for 5 seconds.
   - Gives back a bowl when consumed.
+  
+# Use in Modpacks:
+This mod can be used in any modpack as long as it features a link to this repository. Keep in mind that it may not be stable enough for survival play.
